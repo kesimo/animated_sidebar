@@ -1,48 +1,116 @@
-/*
-TODO :
-- Add a stacked sidebar for mobile view
-- Add a drawer for mobile view
-- add scrollable sidebar for many items
- */
-
 import 'package:animated_sidebar/src/sidebar_item.dart';
 import 'package:flutter/material.dart';
 
-// mark as not immutable
+/// AnimatedSidebar is a stateful widget that displays a sidebar that can
+/// Collapse and Expand.
+///
+/// see: [git](https://github.com/kesimo/animated_sidebar)
 class AnimatedSidebar extends StatefulWidget {
-  //functionality
+  /// A list of SidebarItem objects. Contains the text and icon for each item.
   final List<SidebarItem> items;
+
+  /// This function is called when a sidebar item is tapped.
+  /// It takes the index of the tapped item in [items] as a parameter.
   final void Function(int index) onItemSelected;
+
+  /// The minimum width of the [AnimatedSidebar] when it is collapsed.
   final double minSize;
+
+  /// The maximum width of the [AnimatedSidebar] when it is expanded.
   final double maxSize;
+
+  /// The index of the selected item. based on the index of the element in the [items] list
+  /// this is used to highlight the selected item.
+  /// on page change, this value should be updated.
   final int selectedIndex;
+
+  /// Used to determine the initial state of the sidebar.
   final bool expanded;
+
+  /// The margin of the sidebar.
   final EdgeInsets margin;
+
+  /// The duration of the animation.
+  /// The default value is 250 milliseconds.
   final Duration duration;
+
+  /// Used to determine the animation curve.
+  /// The default value is [Curves.easeInOut].
   final Curve curve;
-  //item style
+
+  /// The size of the [SidebarItem.icon] for all [items] in the sidebar.
+  /// The default value is 32.0.
   final double itemIconSize;
+
+  /// The color of the [SidebarItem.icon] for all [items] in the sidebar.
+  /// The default value is [Colors.white].
   final Color itemIconColor;
+
+  /// Set the text style of the [SidebarItem.text].
   final TextStyle itemTextStyle;
+
+  /// The space between each item in [items].
+  /// The default value is 8.0.
   final double itemSpaceBetween;
+
+  /// The Color of the [SidebarItem] when it is selected
+  /// OR: the [selectedIndex] is equal to the index of the item.
+  ///
+  /// The default value is [Colors.indigoAccent].
   final Color? itemSelectedColor;
+
+  /// The Color of the [SidebarItem] when it is hovered.
+  ///
+  /// The default value is [Colors.indigoAccent] with 0.3 opacity.
   final Color? itemHoverColor;
+
+  /// The border radius of the overlay on the selected [SidebarItem].
   final BorderRadiusGeometry itemSelectedBorder;
+
+  /// The margin of the [SidebarItem].
   final double itemMargin;
+
+  /// The [switchIconExpanded] that is displayed on the bottom of the sidebar
+  /// when the sidebar is expanded.
+  /// On tap, the sidebar will be collapsed.
   final IconData? switchIconExpanded;
+
+  /// The [switchIconCollapsed] that is displayed on the bottom of the sidebar
+  /// when the sidebar is collapsed.
+  /// On tap, the sidebar will be expanded.
   final IconData? switchIconCollapsed;
-  //frame
+
+  /// The decoration of the whole [AnimatedSidebar] frame.
+  /// The default value is a [BoxDecoration] with a [BoxShadow] and a [BorderRadius] of 10.
   final BoxDecoration frameDecoration;
-  final EdgeInsetsGeometry frameMargin;
-  //header
+
+  /// The [header] can be used instead of combination of [headerIcon] and [headerText].
+  /// for a custom header widget.
+  ///
+  /// Note:
+  ///
+  ///   * if [header] is not null, [headerIcon] and [headerText] will be ignored.
+  ///   * the [header] should be a responsive widget.
   final Widget? header;
+
+  /// The [headerIcon] is displayed on the top of the sidebar.
+  ///
+  /// if null, only the [headerText] will be displayed.
   final IconData? headerIcon;
+
+  /// the size of the [headerIcon].
   final double? headerIconSize;
+
+  /// The color of the [headerIcon].
   final Color? headerIconColor;
+
+  /// the style of the [headerText].
+  ///
+  /// Overflow will be handled by [TextOverflow.fade].
   final TextStyle? headerTextStyle;
+
+  /// The [headerText] is displayed on the top of the sidebar.
   final String? headerText;
-  //footer
-  final Widget? footer;
 
   const AnimatedSidebar({
     Key? key,
@@ -80,7 +148,6 @@ class AnimatedSidebar extends StatefulWidget {
         ),
       ],
     ),
-    this.frameMargin = EdgeInsets.zero,
     this.header,
     this.headerIcon,
     this.headerIconSize = 32,
@@ -88,7 +155,6 @@ class AnimatedSidebar extends StatefulWidget {
     this.headerTextStyle = const TextStyle(
         fontSize: 22, fontWeight: FontWeight.w500, color: Colors.white),
     this.headerText,
-    this.footer,
   })  : assert((headerIcon != null && headerText != null) ^ (header != null)),
         super(key: key);
 
@@ -158,7 +224,6 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
 
   Widget _buildFrame() {
     return Container(
-      margin: widget.frameMargin,
       height: double.infinity,
       decoration: widget.frameDecoration,
       child: _buildChild(),

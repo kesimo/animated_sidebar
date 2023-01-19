@@ -58,7 +58,9 @@ void main() {
                 headerIconSize: 30,
                 headerIconColor: Colors.deepPurple,
                 headerTextStyle: const TextStyle(
-                    fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white),
+                    fontSize: 22,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white),
                 headerText: ' TimeTasks',
               ),
             ),
