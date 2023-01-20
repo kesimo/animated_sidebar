@@ -21,8 +21,21 @@ class AnimatedSidebar extends StatefulWidget {
 
   /// The index of the selected item. based on the index of the element in the [items] list
   /// this is used to highlight the selected item.
+  ///
   /// on page change, this value should be updated.
+  ///
+  /// NOTE:
+  ///  * Prefer using [autoSelectedIndex] instead of this. so the selected item changes itself.
+  ///    and you don't have to update it manually what causes a rebuild.
+  ///  * If [autoSelectedIndex] is true, this value will be used as Initial value.
   final int selectedIndex;
+
+  /// If true, the selected item will be automatically updated based on the last
+  /// item that was tapped.
+  ///
+  /// NOTE:
+  /// * If [autoSelectedIndex] is true, [selectedIndex] will be used as Initial value.
+  final bool autoSelectedIndex;
 
   /// Used to determine the initial state of the sidebar.
   final bool expanded;
@@ -115,7 +128,8 @@ class AnimatedSidebar extends StatefulWidget {
   const AnimatedSidebar({
     Key? key,
     required this.items,
-    required this.selectedIndex,
+    this.selectedIndex = 0,
+    this.autoSelectedIndex = true,
     required this.onItemSelected,
     this.expanded = true,
     this.margin = const EdgeInsets.all(16),
@@ -167,6 +181,7 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
   bool _inAnimation = false;
   bool _expanded = true;
   int _onHoverIndex = -1;
+  int _selectedIndex = 0;
 
   void _resize() {
     setState(() {
@@ -204,9 +219,18 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
         2;
   }
 
+  void _setSelectedIndex(int index) {
+    if (widget.autoSelectedIndex) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
+
   @override
   void initState() {
     _expanded = widget.expanded;
+    _selectedIndex = widget.selectedIndex;
     super.initState();
   }
 
@@ -323,7 +347,10 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
               ),
               decoration: BoxDecoration(
                   borderRadius: widget.itemSelectedBorder,
-                  color: i == widget.selectedIndex
+                  color: i ==
+                          (widget.autoSelectedIndex
+                              ? _selectedIndex
+                              : widget.selectedIndex)
                       ? widget.itemSelectedColor
                       : (i == _onHoverIndex
                           ? widget.itemHoverColor
@@ -357,7 +384,10 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
                 ],
               ),
             ),
-            onTap: () => widget.onItemSelected(i),
+            onTap: () {
+              _setSelectedIndex(i);
+              widget.onItemSelected(i);
+            },
           ),
         ),
       );

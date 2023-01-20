@@ -1,3 +1,8 @@
+## 0.2.0
+
+* Add `autoSelectedIndex` parameter to `AnimatedSidebar` constructor. To handle state internal by default 
+* Updated `README.md`
+
 ## 0.1.0
 
 * Added documentation for AnimatedSidebar and SidebarItem

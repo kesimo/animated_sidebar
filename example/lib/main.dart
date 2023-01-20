@@ -68,7 +68,13 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: const EdgeInsets.fromLTRB(16, 24, 0, 24),
               expanded: MediaQuery.of(context).size.width > 600,
               items: items,
+              // use this to set the active tab if you want to control it from outside
+              // combined with autoSelectedIndex set to false
+              // if you don't set autoSelectedIndex to false, the widget will
+              // automatically set the active tab and selected item is used only
+              // to set the initial value
               selectedIndex: activeTab,
+              autoSelectedIndex: false,
               onItemSelected: (index) => setState(() => activeTab = index),
               duration: const Duration(milliseconds: 1000),
               frameDecoration: const BoxDecoration(

@@ -32,64 +32,98 @@ import 'package:animated_sidebar/animated_sidebar.dart';
 define a list of `SidebarItem` objects:
 
 ```dart
-  import 'package:animated_sidebar/animated_sidebar.dart';
+import 'package:animated_sidebar/animated_sidebar.dart';
 
-  final List<SidebarItem> items = [
-    SidebarItem(
-      icon: Icons.home,
-      text: 'Home',
-    ),
-    SidebarItem(
-      icon: Icons.notification_important_rounded,
-      text: 'Notifications',
-    ),
-    SidebarItem(
-      icon: Icons.person,
-      text: 'Management',
-    ),
-    SidebarItem(
-      icon: Icons.abc,
-      text: 'Integrations',
-    ),
-    SidebarItem(
-      icon: Icons.settings,
-      text: 'Settings',
-    ),
-  ];
+final List<SidebarItem> items = [
+  SidebarItem(
+    icon: Icons.home,
+    text: 'Home',
+  ),
+  SidebarItem(
+    icon: Icons.notification_important_rounded,
+    text: 'Notifications',
+  ),
+  SidebarItem(
+    icon: Icons.person,
+    text: 'Management',
+  ),
+  SidebarItem(
+    icon: Icons.abc,
+    text: 'Integrations',
+  ),
+  SidebarItem(
+    icon: Icons.settings,
+    text: 'Settings',
+  ),
+];
 
 ```
 
-use the `AnimatedSidebar` widget:
+## Default usage of `AnimatedSidebar`
 
 ```dart
-  import 'package:animated_sidebar/animated_sidebar.dart';
+import 'package:animated_sidebar/animated_sidebar.dart';
 
-  int activeTab = 0;
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    body: Row(
+      children: [
+        AnimatedSidebar(
+          expanded: MediaQuery.of(context).size.width > 600,
+          items: items,
+          selectedIndex: 0,
+          onItemSelected: (index) => print(index),
+          headerIcon: Icons.ac_unit_sharp,
+          headerIconColor: Colors.amberAccent,
+          headerText: 'Example',
+        ),
+        Center(
+          child: Text(
+            'Page: $activeTab',
+            style: Theme.of(context).textTheme.headline3,
+          ),
+        ),
+      ],
+    ),
+  );
+}
+```
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Row(
-        children: [
-          AnimatedSidebar(
-            expanded: MediaQuery.of(context).size.width > 600,
-            items: items,
-            selectedIndex: activeTab,
-            onItemSelected: (index) =>
-                setState(() => activeTab = index),
-            headerIcon: Icons.ac_unit_sharp,
-            headerIconColor: Colors.amberAccent,
-            headerText: 'Example',
+
+## Use the `AnimatedSidebar` widget and *handle state external* :
+
+```dart
+import 'package:animated_sidebar/animated_sidebar.dart';
+
+int activeTab = 0;
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+    body: Row(
+      children: [
+        AnimatedSidebar(
+          expanded: MediaQuery.of(context).size.width > 600,
+          items: items,
+          selectedIndex: activeTab,
+          autoSelectedIndex: false, // must be false if you want to handle state external
+          onItemSelected: (index) =>
+              setState(() => activeTab = index),
+          headerIcon: Icons.ac_unit_sharp,
+          headerIconColor: Colors.amberAccent,
+          headerText: 'Example',
+        ),
+        Center(
+          child: Text(
+            'Page: $activeTab',
+            style: Theme.of(context).textTheme.headline3,
           ),
-          Center(
-            child: Text(
-              'Page: $activeTab',
-              style: Theme.of(context).textTheme.headline3,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
 ```
