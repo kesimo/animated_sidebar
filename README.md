@@ -12,7 +12,7 @@ Add the following to your pubspec.yaml file:
 
 ```bash
 dependencies:
-  animated_sidebar: ^0.0.1
+  animated_sidebar: ^0.2.0
 ```
 
 or use the following command:
