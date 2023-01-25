@@ -1,5 +1,9 @@
 # Animated Sidebar
 
+[![pub package](https://img.shields.io/pub/v/animated_sidebar.svg?style=flat-square)](https://pub.dev/packages/animated_sidebar)
+[![Libraries.io for GitHub](https://img.shields.io/librariesio/github/kesimo/animated_sidebar.svg?style=flat-square)](https://libraries.io/github/kesimo/animated_sidebar) 
+[![License](https://img.shields.io/badge/License-MIT%20-green.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
 A highly customizable and styleable collapsable sidebar plugin for Flutter, optimized for web and desktop applications.
 
 ## Example
