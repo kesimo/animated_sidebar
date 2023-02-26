@@ -1,3 +1,8 @@
+## 1.0.0
+
+* Add `SidebarChildItem` to create a collapsible sidebar item
+* Update `README.md`
+
 ## 0.2.0
 
 * Add `autoSelectedIndex` parameter to `AnimatedSidebar` constructor. To handle state internal by default 

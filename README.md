@@ -1,3 +1,4 @@
+
 # Animated Sidebar
 
 A highly customizable and styleable collapsable sidebar plugin for Flutter, optimized for web and desktop applications.
@@ -10,56 +11,60 @@ A highly customizable and styleable collapsable sidebar plugin for Flutter, opti
 
 Add the following to your pubspec.yaml file:
 
-```bash
-dependencies:
-  animated_sidebar: ^0.2.0 
-```
+```bash  
+dependencies:  
+ animated_sidebar: ^1.0.0   
+```  
 
 or use the following command:
 
-```bash
-flutter pub add animated_sidebar
-```
+```bash  
+flutter pub add animated_sidebar  
+```  
 
 Add the following import to your dart file:
 
-```dart
-import 'package:animated_sidebar/animated_sidebar.dart';
-```
+```dart  
+import 'package:animated_sidebar/animated_sidebar.dart';  
+```  
 
 ## Usage
 
+### Sidebar Items
 define a list of `SidebarItem` objects:
 
-```dart
-import 'package:animated_sidebar/animated_sidebar.dart';
-
-final List<SidebarItem> items = [
-  SidebarItem(
-    icon: Icons.home,
-    text: 'Home',
-  ),
-  SidebarItem(
-    icon: Icons.notification_important_rounded,
-    text: 'Notifications',
-  ),
-  SidebarItem(
-    icon: Icons.person,
-    text: 'Management',
-  ),
-  SidebarItem(
-    icon: Icons.abc,
-    text: 'Integrations',
-  ),
-  SidebarItem(
-    icon: Icons.settings,
-    text: 'Settings',
-  ),
-];
-
+```dart  
+import 'package:animated_sidebar/animated_sidebar.dart';  
+  
+final List<SidebarItem> items = [  
+  SidebarItem(icon: Icons.home, text: 'Home'),  
+  SidebarItem(icon: Icons.notifications, text: 'Notifications'),  
+  SidebarItem(icon: Icons.person, text: 'Management'),  
+];  
 ```
 
-## Default usage of `AnimatedSidebar`
+### Child Items
+it is also possible to define multiple `SidebarChildItem` for every `SidebarItem`.
+
+```dart  
+import 'package:animated_sidebar/animated_sidebar.dart';  
+  
+final List<SidebarItem> items = [  
+  SidebarItem(icon: Icons.home, text: 'Home'),  
+  SidebarItem(  
+    icon: Icons.person,  
+    text: 'Management',  
+    children: [  
+	  SidebarChildItem(icon: Icons.person, text: 'Users'),  
+	  SidebarChildItem(icon: Icons.verified_user, text: 'Roles'),  
+    ],  
+  ),
+];  
+```
+The Item Containing the Children is Collapsed and expand only on tap. If the Current selected item is a `SidebarChildItem` the overlying Item keeps expanded
+
+
+### Default usage of `AnimatedSidebar`
 
 ```dart
 import 'package:animated_sidebar/animated_sidebar.dart';
@@ -92,7 +97,7 @@ Widget build(BuildContext context) {
 ```
 
 
-## Use the `AnimatedSidebar` widget and *handle state external* :
+### Use the `AnimatedSidebar` widget and *handle state external* :
 
 ```dart
 import 'package:animated_sidebar/animated_sidebar.dart';

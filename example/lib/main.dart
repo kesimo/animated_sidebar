@@ -40,12 +40,26 @@ class _MyHomePageState extends State<MyHomePage> {
       text: 'Home',
     ),
     SidebarItem(
-      icon: Icons.notification_important_rounded,
+      icon: Icons.notifications,
       text: 'Notifications',
     ),
     SidebarItem(
       icon: Icons.person,
       text: 'Management',
+      children: [
+        SidebarChildItem(
+          icon: Icons.person,
+          text: 'Users',
+        ),
+        SidebarChildItem(
+          icon: Icons.verified_user,
+          text: 'Roles',
+        ),
+        SidebarChildItem(
+          icon: Icons.key,
+          text: 'Permissions',
+        ),
+      ],
     ),
     SidebarItem(
       icon: Icons.abc,
@@ -119,15 +133,6 @@ class _MyHomePageState extends State<MyHomePage> {
               headerText: ' Example',
             ),
             Expanded(
-              // child: Container(
-              //   margin: const EdgeInsets.only(top: 24, bottom: 0),
-              //   child: Center(
-              //     child: Text(
-              //       'index: $activeTab',
-              //       style: Theme.of(context).textTheme.headline3,
-              //     ),
-              //   ),
-              // ),
               child: _buildPage(activeTab),
             ),
           ],
