@@ -356,109 +356,130 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
     return items;
   }
 
-   Widget _buildSingleItem(int index, SidebarItem item, bool isChild, bool isHeader) {
-
+  Widget _buildSingleItem(
+      int index, SidebarItem item, bool isChild, bool isHeader) {
     Color? color = index ==
-        (widget.autoSelectedIndex
-            ? _selectedIndex
-            : widget.selectedIndex)
+            (widget.autoSelectedIndex ? _selectedIndex : widget.selectedIndex)
         ? widget.itemSelectedColor
-        : (index == _onHoverIndex
-        ? widget.itemHoverColor
-        : Colors.transparent);
+        : (index == _onHoverIndex ? widget.itemHoverColor : Colors.transparent);
 
-    bool colorHeader = !_expanded && !_inAnimation && isHeader && index >= _expanedIndex && index < _expanedIndex + widget.items[index - _expanedIndex].children.length + 1;
+    bool colorHeader = !_expanded &&
+        !_inAnimation &&
+        isHeader &&
+        index >= _expanedIndex &&
+        index <
+            _expanedIndex +
+                widget.items[index - _expanedIndex].children.length +
+                1;
 
     return MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onHover: (_) => _setOnHover(index),
-        onExit: (_) => _setExitHover(),
-        child: GestureDetector(
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-              vertical: 4,
-            ),
-            decoration: BoxDecoration(
-                borderRadius: widget.itemSelectedBorder,
-                color: colorHeader ? widget.itemSelectedColor : color ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  width: _calculateItemOffset(),
-                ),
-                Icon(
-                  item.icon,
-                  color: widget.itemIconColor,
-                  size: widget.itemIconSize,
-                ),
-                _expanded || _inAnimation
-                    ? const Padding(padding: EdgeInsets.only(left: 8))
-                    : const SizedBox.shrink(),
-                _expanded || _inAnimation
-                    ? Flexible(
-                        child: Text(
-                          item.text,
-                          overflow: TextOverflow.fade,
-                          maxLines: 1,
-                          softWrap: false,
-                          style: isChild? widget.itemTextStyle.copyWith(color: widget.itemTextStyle.color?.withOpacity(0.6)) : widget.itemTextStyle,
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                _expanded && !_inAnimation && isHeader
-                    ? Padding(
-                      padding: const EdgeInsets.fromLTRB(5,0,0,0),
-                      child: Icon(Icons.keyboard_arrow_down, size: widget.itemIconSize, color: widget.itemIconColor,),
-                    )
-                    : const SizedBox.shrink(),
-              ],
-            ),
+      cursor: SystemMouseCursors.click,
+      onHover: (_) => _setOnHover(index),
+      onExit: (_) => _setExitHover(),
+      child: GestureDetector(
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(
+            vertical: 4,
           ),
-          onTap: () {
-            if (isHeader) {
-              setState(() {
+          decoration: BoxDecoration(
+              borderRadius: widget.itemSelectedBorder,
+              color: colorHeader ? widget.itemSelectedColor : color),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: _calculateItemOffset(),
+              ),
+              Icon(
+                item.icon,
+                color: widget.itemIconColor,
+                size: widget.itemIconSize,
+              ),
+              _expanded || _inAnimation
+                  ? const Padding(padding: EdgeInsets.only(left: 8))
+                  : const SizedBox.shrink(),
+              _expanded || _inAnimation
+                  ? Flexible(
+                      child: Text(
+                        item.text,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: isChild
+                            ? widget.itemTextStyle.copyWith(
+                                color: widget.itemTextStyle.color
+                                    ?.withOpacity(0.6))
+                            : widget.itemTextStyle,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              _expanded && !_inAnimation && isHeader
+                  ? Padding(
+                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                      child: Icon(
+                        Icons.keyboard_arrow_down,
+                        size: widget.itemIconSize,
+                        color: widget.itemIconColor,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
+        ),
+        onTap: () {
+          if (isHeader) {
+            setState(() {
               _expanedIndex = index;
             });
-            } else if (!isChild) {
-              setState(() {
+          } else if (!isChild) {
+            setState(() {
               _expanedIndex = -1;
             });
-            }
-            _setSelectedIndex(index);
-            widget.onItemSelected(index);
-          },
-        ),
-      );
+          }
+          _setSelectedIndex(index);
+          widget.onItemSelected(index);
+        },
+      ),
+    );
   }
 
   Widget _buildMultiItem(int baseIndex, SidebarItem item) {
-      List<Widget> childItems = [];
-      for (int i = 0; i < item.children.length; i++) {
-        childItems.add(
-          SizedBox(
-            height: widget.itemSpaceBetween,
-          ),
-        );
-        childItems.add(
-          _buildSingleItem(baseIndex + i + 1, SidebarItem(
-            text: item.children[i].text,
-            icon: item.children[i].icon,
-          ), true, false),
-        );
-      }
-      return Column(
-        children: [
-          _buildSingleItem(baseIndex, item, false, true),
-          Container(
-            margin: const EdgeInsets.only(left: 12),
-            child: _expanded && !_inAnimation && ((_selectedIndex >= baseIndex && _selectedIndex <= baseIndex + childItems.length) || _expanedIndex == baseIndex)? Column(
-              children: childItems,
-            ): const SizedBox.shrink(),
-          ),
-        ],
+    List<Widget> childItems = [];
+    for (int i = 0; i < item.children.length; i++) {
+      childItems.add(
+        SizedBox(
+          height: widget.itemSpaceBetween,
+        ),
       );
+      childItems.add(
+        _buildSingleItem(
+            baseIndex + i + 1,
+            SidebarItem(
+              text: item.children[i].text,
+              icon: item.children[i].icon,
+            ),
+            true,
+            false),
+      );
+    }
+    return Column(
+      children: [
+        _buildSingleItem(baseIndex, item, false, true),
+        Container(
+          margin: const EdgeInsets.only(left: 12),
+          child: _expanded &&
+                  !_inAnimation &&
+                  ((_selectedIndex >= baseIndex &&
+                          _selectedIndex <= baseIndex + childItems.length) ||
+                      _expanedIndex == baseIndex)
+              ? Column(
+                  children: childItems,
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
+    );
   }
 }

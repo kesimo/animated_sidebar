@@ -1,6 +1,6 @@
 name: animated_sidebar
 description: A collapsable sidebar plugin for Flutter, optimized for web and desktop applications.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/kesimo/animated_sidebar
 repository: https://github.com/kesimo/animated_sidebar
 

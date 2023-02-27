@@ -1,3 +1,7 @@
+## 1.0.1
+
+* Code formatting and cleanup
+
 ## 1.0.0
 
 * Add `SidebarChildItem` to create a collapsible sidebar item
