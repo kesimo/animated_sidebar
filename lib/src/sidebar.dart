@@ -337,10 +337,17 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
     int index = 0;
     for (int i = 0; i < widget.items.length; i++) {
       if (widget.items[i].children.isNotEmpty) {
-        items.add(
-          _buildMultiItem(index, widget.items[i]),
-        );
-        index += widget.items[i].children.length + 1;
+        if (_expanded) {
+          items.add(
+            _buildMultiItem(index, widget.items[i]),
+          );
+          index += widget.items[i].children.length + 1;
+        } else {
+          items.add(
+            _buildSingleItem(index, widget.items[i], false, false),
+          );
+          index++;
+        }
       } else {
         items.add(
           _buildSingleItem(index, widget.items[i], false, false),
