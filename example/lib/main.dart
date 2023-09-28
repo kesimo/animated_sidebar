@@ -123,7 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               itemMargin: 16,
               itemSpaceBetween: 10,
-              headerIcon: Icons.ac_unit_sharp,
+              headerIcon: const CircleAvatar(
+                child: Icon(Icons.hive_sharp),
+              ),
               headerIconSize: 30,
               headerIconColor: Colors.amberAccent,
               headerTextStyle: const TextStyle(

@@ -109,7 +109,7 @@ class AnimatedSidebar extends StatefulWidget {
   /// The [headerIcon] is displayed on the top of the sidebar.
   ///
   /// if null, only the [headerText] will be displayed.
-  final IconData? headerIcon;
+  final Widget? headerIcon;
 
   /// the size of the [headerIcon].
   final double? headerIconSize;
@@ -124,6 +124,10 @@ class AnimatedSidebar extends StatefulWidget {
 
   /// The [headerText] is displayed on the top of the sidebar.
   final String? headerText;
+
+  /// The [textCallback] is a callback function that can be passed
+  /// to the sidebar to be called when [headerText] is pressed
+  final VoidCallback? textCallback;
 
   const AnimatedSidebar({
     Key? key,
@@ -169,6 +173,7 @@ class AnimatedSidebar extends StatefulWidget {
     this.headerTextStyle = const TextStyle(
         fontSize: 22, fontWeight: FontWeight.w500, color: Colors.white),
     this.headerText,
+    this.textCallback,
   })  : assert((headerIcon != null && headerText != null) ^ (header != null)),
         super(key: key);
 
@@ -302,18 +307,19 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
   Widget _buildIconTextHeader() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: _calculateHeaderItemOffset()),
-      height: 64,
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            widget.headerIcon,
-            color: widget.headerIconColor,
-            size: widget.headerIconSize,
+          SizedBox(
+            height: widget.headerIconSize,
+            width: widget.headerIconSize,
+            child: widget.headerIcon,
           ),
           _expanded || _inAnimation
               ? Flexible(
+                  child: TextButton(
+                  onPressed: widget.textCallback,
                   child: Text(
                     widget.headerText ?? 'missing',
                     overflow: TextOverflow.fade,
@@ -321,7 +327,7 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
                     softWrap: false,
                     style: widget.headerTextStyle,
                   ),
-                )
+                ))
               : const SizedBox.shrink(),
         ],
       ),

@@ -54,7 +54,7 @@ void main() {
                 ),
                 itemMargin: 16,
                 itemSpaceBetween: 10,
-                headerIcon: Icons.menu,
+                headerIcon: const CircleAvatar(child: Icon(Icons.adb_sharp)),
                 headerIconSize: 30,
                 headerIconColor: Colors.deepPurple,
                 headerTextStyle: const TextStyle(
