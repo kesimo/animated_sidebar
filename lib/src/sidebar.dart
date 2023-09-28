@@ -303,7 +303,7 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
     return Container(
       padding: EdgeInsets.symmetric(horizontal: _calculateHeaderItemOffset()),
       height: 64,
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
