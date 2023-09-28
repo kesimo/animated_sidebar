@@ -307,7 +307,6 @@ class _AnimatedSidebarState extends State<AnimatedSidebar>
   Widget _buildIconTextHeader() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: _calculateHeaderItemOffset()),
-      height: 64,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
